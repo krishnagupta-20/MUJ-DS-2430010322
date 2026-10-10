@@ -1,0 +1,13 @@
+Computed by hand from the numbers in the executed Colab notebook (results.csv, efficiency_calibration.csv, mcnemar_pairwise.csv).
+Running `python src/test.py` regenerates this file automatically from a fresh run and will overwrite it.
+
+Best overall: Baseline CNN (0.9291)
+Best convolution-based model: Baseline CNN (0.9291)
+Best attention/transformer-based model: Hybrid Conv-Transformer (0.9272)
+Gap: -0.19 points | McNemar p = 0.422 (NOT statistically distinguishable at 0.05)
+
+Pure ViT vs best reference CNN (Baseline CNN): -6.55 points
+  -> The pure transformer did NOT beat the CNN.
+Hybrid vs pure ViT: +6.36 points (conv stem effect; positive = convolutional priors helped the transformer)
+Calibration (ECE, lower is better): Baseline CNN=0.0102, CBAM-CNN=0.0077, ConvNeXt-style=0.0111, ViT-Small=0.0254, Hybrid Conv-Transformer=0.0147
+Note: single seed. Seed study was not run.

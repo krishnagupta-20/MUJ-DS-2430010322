@@ -1,0 +1,6 @@
+Model,Family,Hyperparameters,Accuracy,Precision (macro),Recall (macro),F1 (macro),Specificity (macro),ROC-AUC (macro)
+Baseline CNN,CNN,"{""dropout"": 0.1}",0.9291,0.9292,0.9291,0.929,0.9921,0.9962
+Hybrid Conv-Transformer,CNN+Transformer,"{""dropout"": 0.1}",0.9272,0.9268,0.9272,0.9269,0.9919,0.9961
+CBAM-CNN,CNN,"{""dropout"": 0.1}",0.9097,0.9093,0.9097,0.9092,0.99,0.9942
+ConvNeXt-style,Modern CNN,"{""dropout"": 0.1}",0.8947,0.8949,0.8947,0.8946,0.9883,0.9924
+ViT-Small,Transformer,"{""dropout"": 0.1, ""patch_size"": 4}",0.8636,0.8625,0.8636,0.8629,0.9848,0.9885

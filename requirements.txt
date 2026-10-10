@@ -1,0 +1,12 @@
+# Results in this project were produced on Google Colab (GPU) with TensorFlow 2.21.0 and Keras 3.13.2.
+# The scripts in src/ were smoke-tested (synthetic data) with TensorFlow 2.21 / Keras 3.15 on CPU.
+# Keras 3 is required (keras.ops, CosineDecay warm-up, .weights.h5 format).
+tensorflow>=2.16
+keras>=3.0
+numpy>=1.26
+pandas>=2.0
+scipy>=1.11
+scikit-learn>=1.3
+matplotlib>=3.8
+seaborn>=0.13
+jupyter>=1.0   # only needed to open notebooks/experiments.ipynb

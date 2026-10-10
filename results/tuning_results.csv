@@ -1,0 +1,13 @@
+Model,Hyperparameters,Best Val Acc
+Baseline CNN,"{""dropout"": 0.1}",0.915
+Baseline CNN,"{""dropout"": 0.3}",0.9127
+CBAM-CNN,"{""dropout"": 0.1}",0.9135
+CBAM-CNN,"{""dropout"": 0.3}",0.9128
+ConvNeXt-style,"{""dropout"": 0.1}",0.8413
+ConvNeXt-style,"{""dropout"": 0.3}",0.8363
+ViT-Small,"{""dropout"": 0.1, ""patch_size"": 4}",0.8182
+ViT-Small,"{""dropout"": 0.1, ""patch_size"": 7}",0.8028
+ViT-Small,"{""dropout"": 0.3, ""patch_size"": 4}",0.7758
+ViT-Small,"{""dropout"": 0.3, ""patch_size"": 7}",0.757
+Hybrid Conv-Transformer,"{""dropout"": 0.1}",0.9177
+Hybrid Conv-Transformer,"{""dropout"": 0.3}",0.9107

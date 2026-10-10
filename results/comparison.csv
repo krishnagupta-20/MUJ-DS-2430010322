@@ -1,0 +1,11 @@
+Model,Accuracy,Precision,Recall,F1,AUC,Parameters,Source
+WRN-28-10 + Random Erasing,0.963,Not reported,Not reported,Not reported,Not reported,Not reported,UNVERIFIED - carried over from earlier notebook (cited there as arXiv:1802.07589)
+DenseNet-BC,0.954,Not reported,Not reported,Not reported,Not reported,"768,000",UNVERIFIED - carried over from earlier notebook (cited there as arXiv:1802.07589)
+MobileNet,0.95,Not reported,Not reported,Not reported,Not reported,Not reported,UNVERIFIED - carried over from earlier notebook (cited there as arXiv:1802.07589)
+GoogLeNet,0.937,Not reported,Not reported,Not reported,Not reported,Not reported,UNVERIFIED - carried over from earlier notebook (cited there as arXiv:1802.07589)
+VGG16,0.935,Not reported,Not reported,Not reported,Not reported,"26,000,000",UNVERIFIED - carried over from earlier notebook (cited there as arXiv:1802.07589)
+Baseline CNN (this work),0.9291,0.9292,0.9291,0.929,0.9962,"111,370",This work
+Hybrid Conv-Transformer (this work),0.9272,0.9268,0.9272,0.9269,0.9961,"305,194",This work
+CBAM-CNN (this work),0.9097,0.9093,0.9097,0.9092,0.9942,"117,295",This work
+ConvNeXt-style (this work),0.8947,0.8949,0.8947,0.8946,0.9924,"221,146",This work
+ViT-Small (this work),0.8636,0.8625,0.8636,0.8629,0.9885,"205,834",This work

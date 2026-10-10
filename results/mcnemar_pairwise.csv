@@ -1,0 +1,11 @@
+Model A,Model B,Acc diff (A-B),"A right, B wrong","B right, A wrong",p-value,Significant (Bonferroni 0.005)
+Baseline CNN,CBAM-CNN,0.0194,392.0,198.0,0.0,True
+Baseline CNN,ConvNeXt-style,0.0344,557.0,213.0,0.0,True
+Baseline CNN,ViT-Small,0.0655,868.0,213.0,0.0,True
+CBAM-CNN,ConvNeXt-style,0.015,463.0,313.0,0.0,True
+CBAM-CNN,Hybrid Conv-Transformer,-0.0175,221.0,396.0,0.0,True
+CBAM-CNN,ViT-Small,0.0461,718.0,257.0,0.0,True
+ConvNeXt-style,ViT-Small,0.0311,636.0,325.0,0.0,True
+ConvNeXt-style,Hybrid Conv-Transformer,-0.0325,229.0,554.0,0.0,True
+ViT-Small,Hybrid Conv-Transformer,-0.0636,,,,True
+Baseline CNN,Hybrid Conv-Transformer,0.0019,,,0.422,False

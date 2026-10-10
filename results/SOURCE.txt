@@ -1,0 +1,23 @@
+WHERE THESE FILES CAME FROM
+===========================
+The tables and plots in results/ and figures/ were taken from the executed Colab notebook
+(notebooks/experiments.ipynb; printed to PDF on 10/10/26, TensorFlow 2.21.0, Keras 3.13.2, GPU runtime):
+
+  * PNG files   : the figures embedded in the executed notebook, extracted unchanged.
+  * CSV files   : the tables printed in the notebook, transcribed value-for-value (4 decimals as printed).
+
+Not available from the printed notebook, so NOT included here:
+  * history_<model>.csv, training_times.csv  (per-epoch histories; train times are in efficiency_calibration.csv)
+  * per_class_metrics.csv                    (only the Baseline CNN breakdown and the per-class F1 heatmap were printed)
+  * seed_study.csv                           (seed study was not run)
+  * models/*.weights.h5                      (the notebook did not save weights)
+
+Known gaps in the transcription:
+  * mcnemar_pairwise.csv: the printed table was cut off after 8 of 10 rows. The two missing pairs
+    (ViT-Small vs Hybrid, Baseline CNN vs Hybrid) are filled from the printed heatmap and the accuracy
+    table: p-values are blank where the heatmap only shows 0.000, and the disagreement counts are blank.
+  * per_class_f1.csv: read from the heatmap annotations (3 decimals).
+
+Running `python src/train.py` then `python src/test.py` regenerates everything from scratch and will
+overwrite these files. Results from a fresh run can differ slightly from the Colab run, so do not mix
+numbers from the two runs in one report.

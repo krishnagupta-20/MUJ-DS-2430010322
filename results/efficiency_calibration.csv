@@ -1,0 +1,6 @@
+Model,Family,Params,Epochs Run,Train Time (s),Latency (ms / 1000 imgs),Accuracy,ECE,NLL,Acc per 100k params
+Baseline CNN,CNN,111370,30,212.0,95.7,0.9291,0.0102,0.2005,0.8342
+Hybrid Conv-Transformer,CNN+Transformer,305194,30,763.1,129.9,0.9272,0.0147,0.2044,0.3038
+CBAM-CNN,CNN,117295,17,243.0,105.6,0.9097,0.0077,0.2494,0.7756
+ConvNeXt-style,Modern CNN,221146,30,810.2,165.4,0.8947,0.0111,0.2822,0.4046
+ViT-Small,Transformer,205834,30,871.0,121.4,0.8636,0.0254,0.3762,0.4196

@@ -1,0 +1,18 @@
+{
+  "Baseline CNN": {
+    "dropout": 0.1
+  },
+  "CBAM-CNN": {
+    "dropout": 0.1
+  },
+  "ConvNeXt-style": {
+    "dropout": 0.1
+  },
+  "ViT-Small": {
+    "dropout": 0.1,
+    "patch_size": 4
+  },
+  "Hybrid Conv-Transformer": {
+    "dropout": 0.1
+  }
+}

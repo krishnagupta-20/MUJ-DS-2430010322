@@ -1,0 +1,75 @@
+MODEL DESCRIPTION
+=================
+
+Five models are compared on identical data, augmentation, optimizer and schedule.
+Only the backbone differs. Source code: src/model.py.
+
+Common to all models
+--------------------
+Input         : 28 x 28 x 1 image in [0, 1]
+Augmentation  : RandomFlip(horizontal) + RandomTranslation(10%), active only in training
+Head          : 10-way softmax
+Loss          : sparse categorical cross-entropy
+Optimizer     : AdamW, peak LR 1e-3, weight decay 0.05, gradient clipping 1.0
+Schedule      : 5% linear warm-up, then cosine decay to 1% of the peak LR
+Batch size    : 128
+Epochs        : up to 30, early stopping on validation loss (patience 6, best weights restored)
+Tuning        : 6-epoch sweep per model (grid below), selected by validation accuracy only
+Seed          : 42
+
+Parameter counts below are for the DEFAULT hyper-parameters. The tuning sweep selected
+dropout = 0.1 for every model and patch size = 4 for ViT-Small, which are also the defaults,
+so the counts of the models actually evaluated are identical to the ones listed here
+(see results/efficiency_calibration.csv).
+
+Selected hyper-parameters (highest validation accuracy in the 6-epoch sweep; results/tuning_results.csv)
+  Baseline CNN             dropout 0.1   (val acc 0.9150; dropout 0.3 gave 0.9127)
+  CBAM-CNN                 dropout 0.1   (val acc 0.9135; dropout 0.3 gave 0.9128)
+  ConvNeXt-style           dropout 0.1   (val acc 0.8413; dropout 0.3 gave 0.8363)
+  ViT-Small                dropout 0.1, patch size 4 (val acc 0.8182; best of 4 configurations)
+  Hybrid Conv-Transformer  dropout 0.1   (val acc 0.9177; dropout 0.3 gave 0.9107)
+Stored in models/best_hyperparameters.json.
+
+1. Baseline CNN  (family: CNN, reference)                      111,370 params
+   3 x [Conv3x3 + ReLU + BatchNorm] with 32/64/128 filters, MaxPool after blocks 1 and 2,
+   global average pooling, Dense(128, ReLU), Dropout, Dense(10, softmax).
+   Tuned: dropout in {0.1, 0.3}.
+
+2. CBAM-CNN  (family: CNN, reference)                          117,295 params
+   Baseline CNN with a CBAM block (channel attention then spatial attention) after every
+   conv block. Spatial attention uses a small custom layer instead of Lambda for
+   Keras-version safety. Tuned: dropout in {0.1, 0.3}.
+
+3. ViT-Small  (family: Transformer)                            205,834 params
+   28x28 image -> non-overlapping patches (Conv2D, stride = patch size) -> learned
+   positional embedding -> 6 pre-norm encoder blocks (4-head self-attention + GELU MLP,
+   dim 64, MLP ratio 2) -> final LayerNorm -> mean-pool over tokens -> classifier.
+   No class token. Tuned: dropout in {0.1, 0.3}, patch size in {4, 7}
+   (4 -> 49 tokens, 7 -> 16 tokens).
+
+4. Hybrid Conv-Transformer  (family: CNN + Transformer)        305,194 params
+   Conv stem (32 -> 64 -> MaxPool -> 96 -> MaxPool) reduces the image to 7x7 feature maps;
+   the 49 feature vectors (dim 96) become tokens for 3 pre-norm transformer blocks
+   (4 heads). Convolution supplies locality, attention supplies global context.
+   Tuned: dropout in {0.1, 0.3}.
+
+5. ConvNeXt-style  (family: Modern CNN)                        221,146 params
+   Patchify stem (Conv 2x2, stride 2) -> 2 blocks at dim 48 -> downsample to dim 96 at
+   7x7 -> 2 blocks. Each block: 7x7 depthwise conv, LayerNorm, inverted-bottleneck MLP
+   (4x, GELU), LayerScale, residual connection. No attention.
+   Tuned: dropout in {0.1, 0.3}.
+
+Test accuracy of the final models (Colab run, held-out 10,000 images)
+  Baseline CNN 0.9291 | Hybrid Conv-Transformer 0.9272 | CBAM-CNN 0.9097 |
+  ConvNeXt-style 0.8947 | ViT-Small 0.8636        (full tables: results/results.csv)
+
+Saved files
+-----------
+models/<name>.weights.h5          NOT included in this submission: the Colab notebook did not save
+                                  weights. Running `python src/train.py` creates them.
+                                  (names: baseline_cnn, cbam_cnn, convnext_style, vit_small,
+                                  hybrid_conv_transformer)
+models/best_hyperparameters.json  selected hyper-parameters; src/test.py uses it to rebuild
+                                  each architecture before loading its weights.
+Weights only are saved (not full models) because the architectures use custom layers; the
+architecture is always rebuilt from src/model.py.

@@ -1,0 +1,6 @@
+Model,Epochs Run,Best Epoch (val loss),Final Train Acc,Final Val Acc,Train-Val Gap
+Baseline CNN,30,30,0.9437,0.9358,0.0079
+CBAM-CNN,17,11,0.9286,0.915,0.0136
+ConvNeXt-style,30,28,0.9056,0.9057,-0.0
+ViT-Small,30,30,0.8547,0.8703,-0.0157
+Hybrid Conv-Transformer,30,27,0.9431,0.9378,0.0053
