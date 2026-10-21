@@ -5,9 +5,8 @@
 |---|---|
 | **Student Name** | Krishna |
 | **Registration Number** | 2430010322 |
-| **Section** | _[Fill in]_ |
-| **Course / Project** | _[Fill in, e.g. DSE3120 Deep Learning]_ |
-| **Submission date** | _[Fill in]_ |
+| **Section** | D |
+| **Course / Project** | DSE3120 Deep Learning] |
 
 ---
 
