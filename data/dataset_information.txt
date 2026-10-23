@@ -1,0 +1,16 @@
+Dataset: Fashion-MNIST (Zalando research)
+Access : streamed automatically by keras.datasets.fashion_mnist.load_data(); no manual download.
+         The raw files are cached by Keras under ~/.keras/datasets/ on first use, so nothing is stored in this folder.
+
+Content : 70,000 grayscale images, 28 x 28 pixels, 10 classes
+          (T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot)
+Official split : 60,000 training + 10,000 test images
+Class balance  : perfectly balanced (6,000 per class in training, 1,000 per class in test)
+
+Split used in this project
+  Train      54,000  (90% of the official training set, stratified, seed 42)
+  Validation  6,000  (10% of the official training set, stratified, seed 42)
+  Test       10,000  (official test set, used only for the final evaluation)
+
+Preprocessing : pixel / 255.0, then a channel axis -> (28, 28, 1)
+Augmentation  : RandomFlip(horizontal) + RandomTranslation(10%), applied inside the model, training only

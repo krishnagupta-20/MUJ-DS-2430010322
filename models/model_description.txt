@@ -1,0 +1,18 @@
+Model: Swin-Tiny style hierarchical transformer (pure transformer, no convolutional backbone)
+
+Input   : 28 x 28 x 1 image (augmentation layer active only in training)
+Patch embedding : non-overlapping 2 x 2 patches, linear projection to 64 dims, LayerNorm -> 14 x 14 = 196 tokens
+Stage 1 : 2 transformer blocks, dim 64, 2 heads, 7 x 7 attention windows;
+          block 1 uses regular windows, block 2 uses windows shifted by 3 pixels (with attention mask)
+Merging : 2 x 2 neighbouring tokens concatenated and projected -> 7 x 7 tokens, dim 128
+Stage 2 : 4 transformer blocks, dim 128, 4 heads (window covers the whole 7 x 7 grid = global attention)
+Block   : pre-norm, window self-attention with learned relative position bias, GELU MLP (ratio 2),
+          residual connections, stochastic depth (drop-path)
+Head    : LayerNorm -> global average pooling over tokens -> dropout -> Dense(10, softmax)
+Parameters : 635,518 (default configuration)
+
+Training: AdamW (lr 1e-3, weight decay 0.05, not applied to biases / LayerNorm / position-bias table),
+          5% warm-up then cosine decay, gradient clipping 1.0, batch size 128, up to 30 epochs,
+          early stopping on validation loss (patience 6), loss = sparse categorical cross-entropy.
+Selected hyper-parameters are written to models/config.json by src/train.py.
+Trained weights are written to models/swin_tiny.weights.h5 by src/train.py (not included until you train).
