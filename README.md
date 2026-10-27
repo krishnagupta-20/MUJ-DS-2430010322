@@ -1,9 +1,21 @@
 # Pure-Transformer Image Classification on Fashion-MNIST
 
+Name: Krishna Gupta
+
 Registration Number: 2430010322
 
-A transformer-only classifier (Swin-style hierarchical transformer, no CNN backbone) for Fashion-MNIST, evaluated with the same
-split, augmentation, optimizer and metrics as the earlier CNN / ViT / Hybrid / ConvNeXt notebook.
+Section: D
+
+A transformer-only classifier (Swin-style hierarchical transformer, no CNN backbone) for Fashion-MNIST, evaluated with the same split, augmentation, optimizer and metrics as the earlier CNN / ViT / Hybrid / ConvNeXt notebook.
+
+## Motivation
+
+**Question:** Can a transformer-only model, with no CNN backbone, match a CNN on small, low-resolution images when trained from scratch?
+
+- A plain ViT-Small reached 86.4% test accuracy versus 92.9% for a small CNN (earlier notebook). A flat ViT has no locality prior, and 54k images of 28x28 is too little data to learn one.
+- This project tests a Swin-style hierarchical transformer. Shifted-window attention builds locality *inside* the attention mechanism, so the model stays a pure transformer.
+- The comparison is controlled: same dataset, stratified split, augmentation, optimizer, schedule and evaluation protocol as the earlier baselines.
+- Evaluation goes beyond accuracy: calibration (ECE, NLL), latency, bootstrap confidence intervals, McNemar test, seed variance and saliency maps.
 
 ## Folder structure
 
@@ -44,12 +56,24 @@ confidence intervals and saliency maps.
 
 | Model | Test accuracy |
 |---|---|
-| Swin-Tiny (this work) | _fill in from results/results.csv_ |
+| Swin-Style (small), this work | _fill in from results/results.csv_ |
 
 Earlier notebook, single seed, for comparison: Baseline CNN 0.9291, Hybrid Conv-Transformer 0.9272, CBAM-CNN 0.9097,
 ConvNeXt-style 0.8947, ViT-Small 0.8636.
+
+## Future Scope
+
+- **Data-scarce domains:** locality-aware transformers could suit areas with few labelled images, such as medical imaging and industrial defect inspection.
+- **Edge deployment:** windowed attention scales roughly linearly with image size, which makes small hierarchical transformers candidates for on-device vision.
+- **Unified models:** a transformer vision backbone can share one architecture with text and multimodal models.
+- **Retail and fashion:** automated catalogue tagging, visual search, recommendation, and returns/inventory sorting.
+- **Trustworthy AI:** calibration and saliency analysis support confidence-aware, explainable predictions.
+
+> Fashion-MNIST results do not automatically transfer to real-world images. The applications above are research directions, not validated claims.
+
 
 ## Notes
 
 * Results come from one seed unless the seed study in the notebook is enabled.
 * Hyper-parameters are selected on validation accuracy only, never on the test set.
+* The patch embedding is implemented with a stride-`p` `Conv2D`. This is mathematically the same linear projection of non-overlapping `p x p` patches used in every ViT/Swin, not a convolutional feature extractor.
